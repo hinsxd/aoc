@@ -1,0 +1,33 @@
+{
+  "name": "aoc",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@commander-js/extra-typings": "^11.1.0",
+    "@types/fs-extra": "^11.0.4",
+    "axios": "^1.6.2",
+    "commander": "^11.1.0",
+    "dotenv": "^16.3.1",
+    "fs-extra": "^11.2.0",
+    "functools": "^3.4.0",
+    "heap": "^0.2.7",
+    "jest": "^29.7.0",
+    "lodash-es": "^4.17.21",
+    "pycollections": "^0.9.1",
+    "utils": "file:./utils"
+  },
+  "devDependencies": {
+    "vitest": "^1.0.1"
+  },
+  "imports": {
+    "utils/*": "./utils/*"
+  }
+}
