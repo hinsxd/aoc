@@ -157,7 +157,7 @@ function countCoverage(start) {
 }
 
 /**
- * A generator function BFS walk to yield only the used edges
+ * A generator function BFS shortest-path walk to yield only the used edges
  * 
  * @param {Comp} start
  * @param {Comp} end
