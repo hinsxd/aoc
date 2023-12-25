@@ -13,6 +13,8 @@
   "dependencies": {
     "@commander-js/extra-typings": "^11.1.0",
     "@types/fs-extra": "^11.0.4",
+    "algebra.js": "^0.2.6",
+    "algebrite": "^1.4.0",
     "axios": "^1.6.2",
     "commander": "^11.1.0",
     "dotenv": "^16.3.1",
@@ -21,6 +23,8 @@
     "heap": "^0.2.7",
     "jest": "^29.7.0",
     "lodash-es": "^4.17.21",
+    "mathjs": "^12.2.1",
+    "nerdamer": "^1.1.13",
     "pycollections": "^0.9.1",
     "utils": "file:./utils"
   },
