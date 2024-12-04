@@ -8,6 +8,7 @@ global.Oe = Object.entries;
 global.Ok = Object.keys;
 global.Ov = Object.values;
 global.memoize = function (fn) {
+  const cache = new Map();
   return function (...args) {
     const hash = JSON.stringify(args);
     if (cache.has(hash)) return cache.get(hash);
@@ -25,7 +26,12 @@ global.DefaultDict = class DefaultDict extends Map {
 
   get(key) {
     if (!this.has(key)) {
-      this.set(key, this.defaultFactory());
+      this.set(
+        key,
+        typeof this.defaultFactory === "function"
+          ? this.defaultFactory()
+          : this.defaultFactory
+      );
     }
     return super.get(key);
   }

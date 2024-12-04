@@ -9,16 +9,19 @@ l("test");
  */
 export default function (input) {
   const lines = input.split("\n");
+
+  let a = [];
+  let b = [];
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    l(line);
+    const [x, y] = line.split("  ").map((n) => parseInt(n));
+    a.push(x);
+    b.push(y);
   }
 
-  // const blocks = input.split("\n\n");
-  // for (let i = 0; i < blocks.length; i++) {
-  //   const block = blocks[i];
-  //   console.log(block);
-  // }
+  const calcSim = memoize((x) => {
+    return x * b.filter((i) => i === x).length;
+  });
 
-  return 0;
+  return a.map((aa) => calcSim(aa)).reduce((sum, x) => sum + x);
 }
