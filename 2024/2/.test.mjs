@@ -13,7 +13,7 @@ const realInput = readFileContent(path.resolve(__dirname, "./input.txt"));
 describe("day", () => {
   test("part1", () => {
     const file = readFileContent(path.resolve(__dirname, "./test.txt"));
-    expect(part1(file)).toBe(-1);
+    expect(part1(file)).toBe(2);
     const answer = part1(realInput);
     console.log("part1 answer");
     console.log(answer);
@@ -24,7 +24,7 @@ describe("day", () => {
   test("part2", () => {
     const file = readFileContent(path.resolve(__dirname, "./test.txt"));
     // const file = readFileContent(path.resolve(__dirname, "./test2.txt"));
-    expect(part2(file)).toBe(-1);
+    expect(part2(file)).toBe(4);
     const answer = part2(realInput);
     console.log("part2 answer");
     console.log(answer);

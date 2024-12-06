@@ -1,7 +1,28 @@
 import "utils/global.mjs";
 
-const l = new Logger([], true).label("Question 2");
-l("test");
+const l = new Logger([], true).label("Question 1");
+/**
+ *
+ * @param {number[]} level
+ */
+function isSafe(level) {
+  let up = null;
+  for (let i = 0; i < level.length - 1; i++) {
+    const diff = level[i + 1] - level[i];
+    if (Math.abs(diff) > 3 || Math.abs(diff) < 1) {
+      return false;
+    }
+    if (diff !== 0) {
+      if (up === null) {
+        up = diff > 0;
+      } else if (diff > 0 !== up) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 /**
  *
  * @param {string} input
@@ -9,9 +30,18 @@ l("test");
  */
 export default function (input) {
   const lines = input.split("\n");
+  let sum = 0;
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    l(line);
+    const line = lines[i].split(" ").map((x) => parseInt(x));
+    if (
+      isSafe(line) ||
+      line.find((_, i) => {
+        return isSafe(line.toSpliced(i, 1));
+      })
+    ) {
+      sum += 1;
+      continue;
+    }
   }
 
   // const blocks = input.split("\n\n");
@@ -20,5 +50,5 @@ export default function (input) {
   //   console.log(block);
   // }
 
-  return 0;
+  return sum;
 }

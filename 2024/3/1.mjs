@@ -9,9 +9,13 @@ l("test");
  */
 export default function (input) {
   const lines = input.split("\n");
+  let sum = 0;
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    l(line);
+    const matches = [...line.matchAll(/mul\((\d+),(\d+)\)/g)];
+    matches.forEach((match) => {
+      sum += parseInt(match[1]) * parseInt(match[2]);
+    });
   }
 
   // const blocks = input.split("\n\n");
@@ -20,5 +24,5 @@ export default function (input) {
   //   console.log(block);
   // }
 
-  return 0;
+  return sum;
 }

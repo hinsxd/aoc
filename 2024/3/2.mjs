@@ -1,6 +1,6 @@
 import "utils/global.mjs";
 
-const l = new Logger([], true).label("Question 2");
+const l = new Logger([], true).label("Question 1");
 l("test");
 /**
  *
@@ -8,11 +8,14 @@ l("test");
  * @returns {number}
  */
 export default function (input) {
-  const lines = input.split("\n");
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    l(line);
-  }
+  const line = input.replace(/\n/g, "").replace(/don't\(\).*?do\(\)/g, "");
+  let sum = 0;
+
+  const matches = [...line.matchAll(/mul\((\d+),(\d+)\)/g)];
+  matches.forEach((match) => {
+    l(match[1], match[2]);
+    sum += parseInt(match[1]) * parseInt(match[2]);
+  });
 
   // const blocks = input.split("\n\n");
   // for (let i = 0; i < blocks.length; i++) {
@@ -20,5 +23,5 @@ export default function (input) {
   //   console.log(block);
   // }
 
-  return 0;
+  return sum;
 }
