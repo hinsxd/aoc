@@ -18,9 +18,11 @@ const program = new Command()
   .option("-i, --ignoreSolved", "ignore solved")
   .option("-s, --submit <part>", "submit part")
   .option("-t, --test-only", "no need to open files automatically")
+  .option("-o, --once", "Do not watch test")
   .parse();
 
-const { day, year, session, ignoreSolved, submit, testOnly } = program.opts();
+const { day, year, session, ignoreSolved, submit, testOnly, once } =
+  program.opts();
 console.log(year, day);
 if (!session) {
   console.error(
@@ -35,8 +37,7 @@ const client = axios.create({
   },
 });
 
-if (submit) {
-  // read file from `/year/day/${submit}.answer.txt`
+async function handleSubmit() {
   const answer = fs.readFileSync(`./${year}/${day}/${submit}.answer.txt`, {
     encoding: "utf-8",
   });
@@ -59,6 +60,11 @@ if (submit) {
   const wrong = result.data.includes(`If you're stuck`);
   console.log(!wrong ? "Correct" : "Wrong");
   process.exit(0);
+}
+
+if (submit && !testOnly) {
+  // read file from `/year/day/${submit}.answer.txt`
+  await handleSubmit();
 }
 const targetFolder = `./${year}/${day}`;
 
@@ -128,9 +134,20 @@ async function getInput() {
 }
 
 function startTest() {
-  spawn("npx", ["vitest", "--watch", targetFolder], {
-    stdio: "inherit",
-  });
+  if (once) {
+    const p = spawn("npx", ["vitest", "--run", targetFolder], {
+      stdio: "inherit",
+    });
+    p.on("exit", (code) => {
+      if (code === 0 && submit) {
+        handleSubmit()
+      }
+    });
+  } else {
+    spawn("npx", ["vitest", "--watch", targetFolder], {
+      stdio: "inherit",
+    });
+  }
 }
 
 async function openFiles(status = -1) {

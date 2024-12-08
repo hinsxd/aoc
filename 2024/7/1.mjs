@@ -5,15 +5,22 @@ l("test");
 
 function check(result, args) {
   const [first, ...remain] = args;
-  const max = 2 ** remain.length;
-  l("checking", result, args);
+  const choices = 2;
+  const max = choices ** remain.length;
+  // permutate each possibilities
   for (let i = 0; i < max; i++) {
+    // each i encode a unique state
     const ops = remain.map((n, j) => {
       // num, is multiply
-      return [(i & (2 ** j)) > 0, n];
+      return [Math.floor(i / choices ** j) % choices, n];
     });
-    const cal = ops.reduce((acc, [multiply, n]) => {
-      return multiply ? acc * n : acc + n;
+
+    const cal = ops.reduce((acc, [op, n]) => {
+      return {
+        0: acc * n,
+        1: acc + n,
+        2: parseInt(`${acc}${n}`),
+      }[op];
     }, first);
     if (cal === result) {
       return true;

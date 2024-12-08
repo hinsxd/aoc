@@ -180,30 +180,38 @@ global.ObjectMap = class ObjectMap extends Map {
   }
 };
 global.ObjectSet = class ObjectSet extends Set {
+  map = new Map();
+
   #hashFn;
   constructor(hashFn = (obj) => JSON.stringify(obj)) {
     super();
     this.#hashFn = hashFn;
   }
 
-  add(key) {
-    super.add(this.#hashFn(key));
+  add(value) {
+    this.map.set(this.#hashFn(value), value);
+    super.add(this.#hashFn(value));
   }
-  has(key) {
-    return super.has(this.#hashFn(key));
+  has(value) {
+    return super.has(this.#hashFn(value));
   }
-  delete(key) {
-    return super.delete(this.#hashFn(key));
+  delete(value) {
+    this.map.delete(this.#hashFn(value));
+    super.delete(this.#hashFn(value));
   }
   *entries() {
-    for (const [v, _] of super.entries()) {
-      const value = JSON.parse(v);
+    for (const entry of this.map.entries()) {
+      yield entry;
+    }
+  }
+  *values() {
+    for (const value of this.map.values()) {
       yield value;
     }
   }
   *keys() {
     for (const key of super.keys()) {
-      yield JSON.parse(key);
+      yield key;
     }
   }
 };
